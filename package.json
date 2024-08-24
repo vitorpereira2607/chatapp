@@ -9,6 +9,9 @@
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js"
   },
+  "exports":{
+    "./routes/*": "./routes/*.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
