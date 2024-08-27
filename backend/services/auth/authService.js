@@ -1,6 +1,6 @@
 import UserService from "../user/userService.js";
 import AuthValidationService from "./authValidationService.js";
-import PasswordService from "./passwordService";
+import PasswordService from "./passwordService.js";
 
 class AuthService{
     async signUp({fullName, username, password, confirmPassword, gender}){
@@ -10,7 +10,7 @@ class AuthService{
 
         await UserService.checkUserExist(username);
 
-        const hashedPassword = PasswordService.hashPassword(password);
+        const hashedPassword = await PasswordService.hashPassword(password);
 
         const newUser = await UserService.createUser({
             fullName,
@@ -25,7 +25,10 @@ class AuthService{
             username: newUser.username,
             profilePic: newUser.profilePic,
         }
+        
     }
+    
 }
 
-export default AuthService();
+
+export default new AuthService();

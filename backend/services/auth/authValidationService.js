@@ -12,10 +12,11 @@ class AuthValidationService{
     }
 
     validateUserInput(fullName, username){
+        console.log(fullName, username)
         if(!fullName || !username){
             throw new Error("Full name and username are required.")
         }
     }
 }
 
-export default AuthValidationService();
+export default new AuthValidationService();

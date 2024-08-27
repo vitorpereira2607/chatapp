@@ -6,13 +6,13 @@ class AuthController {
 
     async signup(req, res) {
         try {
-            const { fullName, username, password, confirmaPassword, gender } = req.body;
+            const { fullName, username, password, confirmPassword, gender } = req.body;
 
             const result = await AuthService.signUp({
                 fullName,
                 username,
                 password,
-                confirmaPassword,
+                confirmPassword,
                 gender
             })
         

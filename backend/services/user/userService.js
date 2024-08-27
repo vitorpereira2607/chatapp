@@ -1,4 +1,4 @@
-import User from "../../models/UserModel";
+import User from "../../models/UserModel.js";
 
 class UserService {
 
@@ -18,4 +18,4 @@ class UserService {
     }
 }
 
-export default UserService();
+export default new UserService();
