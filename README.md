@@ -33,5 +33,6 @@ npm run build
 ```shell
 npm start
 ```
-📢 Credits
+### 📢 Credits
+
 This project is based on the excellent tutorial by [Burakormez](https://github.com/burakorkmez). I am currently following their guide and learning to build a real-time chat app using the MERN stack, Socket.io, and more. Huge thanks to them for providing such a valuable resource!
