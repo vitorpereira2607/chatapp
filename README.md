@@ -32,4 +32,4 @@ npm start
 ```
 ### 📢 Credits
 
-This project is based on the excellent tutorial by [Burakormez](https://github.com/burakorkmez). I am currently following their guide and learning to build a real-time chat app using the MERN stack, Socket.io, and more. Huge thanks to them for providing such a valuable resource!
+This project is based on the excellent tutorial by [Burak Orkmez](https://github.com/burakorkmez). I am currently following his guide and learning to build a real-time chat app using the MERN stack, Socket.io, and more. Huge thanks to him for providing such a valuable resource!
