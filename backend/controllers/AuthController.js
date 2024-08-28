@@ -1,5 +1,3 @@
-import User from '../models/UserModel.js';
-import bcrypt from 'bcryptjs'
 import AuthService from '../services/auth/authService.js';
 
 class AuthController {
@@ -14,7 +12,7 @@ class AuthController {
                 password,
                 confirmPassword,
                 gender
-            })
+            }, res)
         
             res.status(201).send(result)
 
@@ -24,8 +22,17 @@ class AuthController {
         }
     }
 
-    login(req, res) {
-        res.send("Login sucessfull");
+    async login(req, res) {
+        try {
+            const { username, password } = req.body;
+
+
+
+            res.status(200).send("Login sucessfull");
+
+        } catch (error) {
+            
+        }
     }
 
     logout(req, res) {
