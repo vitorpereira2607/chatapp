@@ -12,9 +12,9 @@ class AuthController {
                 password,
                 confirmPassword,
                 gender
-            }, res)
+            })
         
-            res.status(201).send(result)
+            res.status(201).json(result)
 
         } catch (error) {
             console.error(error);

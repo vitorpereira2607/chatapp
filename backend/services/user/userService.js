@@ -1,28 +1,33 @@
 import User from "../../models/UserModel.js";
-import generateTokenAndSetCookie from "../../utils/GenerateToken.js";
 import passwordService from "../auth/passwordService.js";
 
 class UserService {
 
     async ensureUserDoesNotExist(username) {
-        const user = await User.findOne({ username });
+        try {
+            const user = await User.findOne({ username });
 
-        if (user) {
-            throw new Error("Username already exists.")
+            if (user) {
+                throw new Error("User already exists");
+            }
+
+        } catch (error) {
+            console.error(`Error in ensureUserDoesNotExist: ${error.message}`);
+            throw new Error(`Failed to check if user exists: ${error.message}`);	
         }
+
     }
 
-    async createUser(userData, res) {
+    async createUser(userData) {
         try {
-            await this.checkUserExist(userData.username);
+            await this.ensureUserDoesNotExist(userData.username);
             const newUser = new User(userData);
             await newUser.save();
 
-            generateTokenAndSetCookie(newUser._id, res)
-
             return newUser;
         } catch (error) {
-            throw new Error("Failed to create user.", error.message)
+            console.error(error);
+            throw new Error(`Failed to create user: ${error.message}`);
         }
     }
 
@@ -30,20 +35,15 @@ class UserService {
 
         try {
             const user = await User.findOne({ username });
-
-            if (!user) {
-                throw new Error("User not found.")
-            }
-
             const isMatchPassword = await passwordService.comparePassword(password, user.password);
 
-            if (!isMatchPassword) {
-                throw new Error("Invalid password.")
+            if (!user || !isMatchPassword) {
+                throw new Error("Invalid username or password");
             }
 
             return user;
         } catch (error) {
-            throw new Error("Failed to create user.", error.message)
+            throw new Error(`Failed to authenticate user: ${error.message}`);
         }
     }
 }

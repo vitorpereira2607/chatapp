@@ -1,15 +1,11 @@
 import TokenService from '../services/auth/tokenService.js';
 import CookieService from '../services/auth/cookieService.js';
 
-const generateTokenAndSetCookie = (userId, res) => {
+const generateTokenAndSetCookie = (userId) => {
     try {
 
         if (!userId) {
-            throw new Error("User id is required")
-        }
-
-        if (!res) {
-            throw new Error("Response object is required")
+            throw new Error("User id is required");
         }
 
         const accessToken = TokenService.generateAccessToken(userId);
@@ -19,8 +15,7 @@ const generateTokenAndSetCookie = (userId, res) => {
         CookieService.setRefreshTokenCookie(res, refreshToken);
 
     } catch (error) {
-        console.error("Failed to generate token and set cookie", error);
-        res.status(500).json({ error: error.message })
+        throw new Error(`Failed to generate token and set cookie: ${error.message}`);	
     }
 
 }

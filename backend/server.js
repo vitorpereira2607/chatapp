@@ -1,10 +1,6 @@
-import dotenv from "dotenv"
-dotenv.config();
-
-
+import {config} from "./config/config.js";
 import express from "express";
 import authRoutes from "./routes/authRoutes.js"
-import {config} from "./config/config.js";
 import db from "./db/db.js";
 
 const app = express();
@@ -15,7 +11,6 @@ app.use('/api/auth/', authRoutes);
 
 const startServer = async () => {
     try {
-        
         await db._connect();
 
         app.listen(PORT, () => {

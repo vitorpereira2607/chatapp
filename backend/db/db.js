@@ -4,7 +4,6 @@ import { config } from "../config/config.js";
 class Database {
     async _connect() {
         try {
-            console.log(config.db.url);
             const conn = await mongoose.connect(config.db.url)
     
             console.log(`MongoDB connected: ${conn.connection.host}`)

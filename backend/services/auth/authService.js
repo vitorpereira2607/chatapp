@@ -1,9 +1,10 @@
 import UserService from "../user/userService.js";
-import ValidationService from "../../validation/validationService.js";
+import ValidationService from "../../services/validation/validationService.js";
 import PasswordService from "./passwordService.js";
+import generateTokenAndSetCookie from "../../utils/GenerateToken.js";
 
 class AuthService{
-    async signUp({fullName, username, password, confirmPassword, gender}, res){
+    async signUp({fullName, username, password, confirmPassword, gender}){
         ValidationService.validatePasswords(password, confirmPassword);
         ValidationService.validatePasswordsLenght(password);
         ValidationService.validateUserInput(fullName, username);
@@ -15,7 +16,7 @@ class AuthService{
             username,
             password: hashedPassword,
             gender
-        }, res)
+        })
 
         return {
             _id: newUser._id,
@@ -26,7 +27,22 @@ class AuthService{
     }
 
     async login({username, password}){
+        const user = await UserService.authenticateUser(username, password);
         
+        if(!user){
+            throw new Error("Invalid username or password");
+        }
+
+        const token = generateTokenAndSetCookie(user._id, res);
+
+        if(!token){
+            throw new Error("Failed to generate token");
+        }
+        
+        return {
+            username: user.username,
+            token
+        }
     }
     
 }
