@@ -32,13 +32,16 @@ class UserService {
     }
 
     async authenticateUser(username, password) {
-
         try {
             const user = await User.findOne({ username });
+
+            if(!user) {
+                throw new Error("User not found!");
+            }
             const isMatchPassword = await passwordService.comparePassword(password, user.password);
 
-            if (!user || !isMatchPassword) {
-                throw new Error("Invalid username or password");
+            if(!isMatchPassword) {
+                throw new Error("Invalid password!");
             }
 
             return user;

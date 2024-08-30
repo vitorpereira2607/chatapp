@@ -26,22 +26,19 @@ class AuthService{
         }
     }
 
-    async login({username, password}){
+    async login({username, password}, res){
         const user = await UserService.authenticateUser(username, password);
-        
+
         if(!user){
             throw new Error("Invalid username or password");
         }
 
-        const token = generateTokenAndSetCookie(user._id, res);
-
-        if(!token){
-            throw new Error("Failed to generate token");
-        }
+        const { accessToken, refreshToken } = generateTokenAndSetCookie(user._id, res);
         
         return {
             username: user.username,
-            token
+            accessToken,
+            refreshToken
         }
     }
     
