@@ -3,21 +3,23 @@ import passwordService from "../auth/passwordService.js";
 
 class UserService {
 
-    async getUserById(id) {
-        try{
-            const user = await User.findById(id).select("-password");
+    async getUserById(id){
+        try {
+
+            const user = await User.findById(id).select("-password")
 
             if(!user){
-                throw new Error("User not found!");
+                throw new Error('User not found.')
             }
 
             return user;
-
-        }catch(error){
-            console.error(`Error in getUserById: ${error.message}`);
-            throw new Error(`Failed to get user by id: ${error.message}`);
+            
+        } catch (error) {
+            console.error(`Error in getUserById: ${error.message}`)
+            throw new Error(`Error getting user by id: ${error.message}`)
         }
     }
+
     async ensureUserDoesNotExist(username) {
         try {
             const user = await User.findOne({ username });
