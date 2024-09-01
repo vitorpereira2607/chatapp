@@ -37,6 +37,30 @@ class MessageController {
             res.status(500).json({ error: "Internal server error" })
         }
     }
+
+    async getMessages(req, res) {
+        try {
+            const { id: userToChatId } = req.params;
+            const senderId = req.user._id;
+
+            if (!userToChatId) {
+                return res.status(400).json({ error: "User ID to chat with is required." });
+            }
+
+            const conversation = await Conversation.findOne({
+                participants: { $all: [senderId, userToChatId]}
+            }).populate("messages");
+
+            if (!conversation) {
+                return res.status(404).json({ error: "Conversation not found." });
+            }
+    
+            res.status(200).json(conversation.messages)
+        } catch (error) {
+            console.error("Error in getMessages: ", error.message);
+            res.status(500).json({ error: "Internal server error" })
+        }
+    }
 }
 
 export default new MessageController();

@@ -1,14 +1,15 @@
 import jwt from 'jsonwebtoken';
+import { config } from '../../config/config.js'
 
 class TokenService {
     generateAccessToken(userId) {
-        return jwt.sign({ userId }, process.env.JWT_SECRET_KEY, {
+        return jwt.sign({ userId }, config.jwt.secret_key, {
             expiresIn: '2h'
         })
     }
 
     generateRefreshToken(userId) {
-        return jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET_KEY, {
+        return jwt.sign({ userId }, config.jwt.refresh_secret_key, {
             expiresIn: '7d'
         })
     }   

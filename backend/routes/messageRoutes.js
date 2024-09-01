@@ -3,7 +3,8 @@ import MessageController from "../controllers/messageController.js";
 import ProtectRoute from '../middleware/protectRoute.js';
 const router = express.Router();
 
-router.post('/send/:id', ProtectRoute.protect, MessageController.sendMessage )
+router.get('/:id', ProtectRoute.protect, MessageController.getMessages)
+router.post('/send/:id', ProtectRoute.protect, MessageController.sendMessage)
 
 export default router;
 
