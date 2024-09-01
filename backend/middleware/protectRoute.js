@@ -11,7 +11,7 @@ class ProtectRoute {
                 return res.status(401).json({error: "You need to be logged in to access this route"})
             }
 
-            const decoded = jwt.verify(token, config.jwt.secret);
+            const decoded = jwt.verify(token, config.jwt.secret_key);
 
             if(!decoded){
                 return res.status(401).json({error: "Invalid token"})
