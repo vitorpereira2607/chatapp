@@ -3,6 +3,21 @@ import passwordService from "../auth/passwordService.js";
 
 class UserService {
 
+    async getAllUsersExcept(loggedInUserId){
+        try{
+            const users = await User.find({ _id: { $ne: loggedInUserId}})
+            console.log(users)
+            if(!users){
+                throw new Error('Users not found')
+            }
+
+            return users;
+        }catch(error){
+            console.error(`Error in getAllUsersExcept: ${error.message}`)
+            throw new Error(`Error getting users: ${error.message}`)
+        }
+    }
+
     async getUserById(id){
         try {
 

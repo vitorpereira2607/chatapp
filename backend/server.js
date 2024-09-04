@@ -1,9 +1,13 @@
 import {config} from "./config/config.js";
+import db from "./db/db.js";
+
 import express from "express";
 import cookieParser from "cookie-parser";
+
 import authRoutes from "./routes/authRoutes.js"
 import messageRoutes from "./routes/messageRoutes.js";
-import db from "./db/db.js";
+import userRouter from "./routes/userRoutes.js"
+
 
 const app = express();
 const PORT = config.server.port || 5000;
@@ -13,6 +17,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/user', userRouter);
 
 const startServer = async () => {
     try {
