@@ -1,5 +1,4 @@
-import Conversation from "../models/ConversationModel.js";
-import Message from "../models/MessageModel.js";
+import MessageService from "../services/message/messageService.js";
 
 class MessageController {
     async sendMessage(req, res) {
@@ -8,32 +7,12 @@ class MessageController {
             const { id: receiverId } = req.params;
             const senderId = req.user.id;
 
-            let conversation = await Conversation.findOne({
-                participants: { $all: [senderId, receiverId]}
-            })
-
-            if(!conversation){
-                conversation = await Conversation.create({
-                    participants: [senderId, receiverId]
-                })
-            }
-
-            const newMessage = new Message({
-                senderId,
-                receiverId,
-                message
-            })
-
-            if(newMessage){
-                conversation.messages.push(newMessage);
-            }
-
-            await Promise.all([newMessage.save(), conversation.save()]);
+            const newMessage = await MessageService.sendMessage(senderId, receiverId, message)
 
             res.status(201).json(newMessage);
 
         } catch (error) {
-            console.error("Error in sendMessage: ", error.message);
+            console.error(`Error in sendMessage: ${error.message}`);
             res.status(500).json({ error: "Internal server error" })
         }
     }
@@ -47,15 +26,10 @@ class MessageController {
                 return res.status(400).json({ error: "User ID to chat with is required." });
             }
 
-            const conversation = await Conversation.findOne({
-                participants: { $all: [senderId, userToChatId]}
-            }).populate("messages");
-
-            if (!conversation) {
-                return res.status(404).json({ error: "Conversation not found." });
-            }
+           const conversation = await MessageService.getMessages(senderId, userToChatId)
     
             res.status(200).json(conversation.messages)
+            
         } catch (error) {
             console.error("Error in getMessages: ", error.message);
             res.status(500).json({ error: "Internal server error" })
