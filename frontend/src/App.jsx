@@ -1,7 +1,9 @@
+import Login from "./pages/Login";
+
 export default function App() {
   return (
-    <h1 className="text-5xl font-bold">
-      Hello worssssld!
-    </h1>
+    <div className="p-4 h-screen flex items-center justify-center">
+      <Login />
+    </div>
   )
 }
