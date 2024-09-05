@@ -4,7 +4,7 @@ class CookieService {
             maxAge: 1000 * 60 * 60, // 1 hour
             httpOnly: true, // prevent XSS attacks cross site scripting
             sameSite: "strict", // csrf attacks cross-site request forgery attacks
-            secure: process.env.NODE_ENV === "development"
+            secure: process.env.NODE_ENV
         })
     }
 
@@ -13,7 +13,7 @@ class CookieService {
             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
             httpOnly: true, 
             sameSite: "strict", 
-            secure: process.env.NODE_ENV === "development"
+            secure: process.env.NODE_ENV
         })
 
     }
