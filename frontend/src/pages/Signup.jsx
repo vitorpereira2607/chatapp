@@ -1,4 +1,5 @@
 import { UserIcon, LockClosedIcon } from '@heroicons/react/24/solid'
+import { Link } from 'react-router-dom';
 
 function Signup() {
     return (
@@ -47,9 +48,9 @@ function Signup() {
                     </div>
                     <div className='text-sm'>
                         Already have an account?
-                        <a href='#' className='hover:underline hover:text-blue-600 inline-block ml-1' >
+                        <Link to='/login' className='hover:underline hover:text-blue-600 inline-block ml-1' >
                             Login
-                        </a>
+                        </Link>
                     </div>
                     <div>
                         <button type="submit" className="btn btn-block btn-sm mt-2">Register</button>
