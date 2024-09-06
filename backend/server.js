@@ -3,6 +3,7 @@ import db from "./db/db.js";
 
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js"
 import messageRoutes from "./routes/messageRoutes.js";
@@ -12,6 +13,13 @@ import userRouter from "./routes/userRoutes.js"
 const app = express();
 const PORT = config.server.port || 5000;
 
+app.use(cors({
+    origin: 'http://localhost:3000', // Allow requests from your Vite development server
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+  }));
+  
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
