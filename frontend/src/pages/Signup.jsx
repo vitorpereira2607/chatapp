@@ -2,10 +2,12 @@ import { UserIcon, LockClosedIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useSignup from '../hooks/useSignup';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
 
+    const navigate = useNavigate();
     const [inputs, setInputs] = useState({
         fullName: '',
         username: '',
@@ -14,7 +16,7 @@ function Signup() {
         gender: ''
     })
 
-    const {loading, signup} = useSignup();
+    const { loading, signup } = useSignup();
 
     const handleOnChange = (e) => {
         setInputs({
@@ -25,8 +27,28 @@ function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        await signup(inputs);
+
+        try {
+            const isSuccess = await signup(inputs)
+
+            setInputs({
+                fullName: '',
+                username: '',
+                password: '',
+                confirmPassword: '',
+            })
+
+            if(isSuccess) {
+                toast.success('Account created successfully');
+            } 
+
+            navigate("/login")
+            
+        } catch (error) {
+            console.error(error.message)
+            toast.error('An unexpected error occurred.')
+        }
+
     }
 
     const handleCheckbox = (e) => {
@@ -63,7 +85,7 @@ function Signup() {
                             <input
                                 type="text"
                                 name='username'
-                                className="grow"     
+                                className="grow"
                                 placeholder="Enter Username"
                                 value={inputs.username}
                                 onChange={handleOnChange}
@@ -128,7 +150,7 @@ function Signup() {
                         </Link>
                     </div>
                     <div>
-                        <button type="submit" className="btn btn-block btn-sm mt-2">Register</button>
+                        <button type="submit" className="btn btn-block btn-sm mt-2" disabled={loading}>Register</button>
                     </div>
                 </form>
             </div>
