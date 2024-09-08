@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useSignup from '../hooks/useSignup';
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
 function Signup() {
-
-    const navigate = useNavigate();
+    
     const [inputs, setInputs] = useState({
         fullName: '',
         username: '',
@@ -41,8 +39,6 @@ function Signup() {
             if(isSuccess) {
                 toast.success('Account created successfully');
             } 
-
-            navigate("/login")
             
         } catch (error) {
             console.error(error.message)

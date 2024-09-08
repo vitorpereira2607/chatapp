@@ -1,16 +1,20 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContex";
+import { validateSignup } from "../utils/inputValidation";
 
 function useSignup() {
     const [loading, setLoading] = useState(false);
     const { setAuthUser } = useAuthContext();
+    const [errors, setErrors] = useState({})
 
     const signup = async ({ fullName, username, password, confirmPassword, gender }) => {
-        const success = handleInputErrors({ fullName, username, password, confirmPassword, gender });
+        const validateErrors = validateSignup({ fullName, username, password, confirmPassword, gender })
+        if (Object.keys(validateErrors).length > 0){
+            setErrors(validateErrors)
+        }
 
-        if (!success) return;
-
+        setErrors({});
         setLoading(true);
 
         try {
@@ -28,8 +32,12 @@ function useSignup() {
                 throw new Error(data.error)
             }
 
-            localStorage.setItem("chat-user", JSON.stringify(data))
+            localStorage.setItem("user-info", JSON.stringify(data))
             setAuthUser(data)
+
+            toast.success('Login success');
+
+            return true;
 
         } catch (error) {
             console.error(error.message);
@@ -39,27 +47,7 @@ function useSignup() {
         }
     }
 
-    return { loading, signup };
+    return { loading, signup, errors };
 }
 
 export default useSignup;
-
-function handleInputErrors({ fullName, username, password, confirmPassword, gender }) {
-    if (!fullName || !username || !password || !confirmPassword || !gender) {
-        console.log(fullName, username, password, confirmPassword)
-        toast.error("Please fill in all fields");
-        return false;
-    }
-
-    if (password != confirmPassword) {
-        toast.error('Passwords do not match');
-        return false;
-    }
-
-    if (password.length < 6) {
-        toast.error('Password must be at least 6 characters long');
-        return false;
-    }
-
-    return true;
-}
