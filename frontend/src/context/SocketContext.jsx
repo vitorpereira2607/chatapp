@@ -21,7 +21,6 @@ export const SocketProvider = ({ children }) => {
             const socket = io("http://localhost:5000", {
                 query: {
                     userId: authUser._id,
-                    name: authUser.username
                 }
             });
             setSocket(socket);
