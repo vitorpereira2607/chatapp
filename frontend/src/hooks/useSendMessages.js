@@ -16,13 +16,14 @@ const useSendMessage = () => {
                 body: JSON.stringify({ message })
             })
 
-            const data = response.json()
+            const data = await response.json()
 
             if (data.error) {
                 throw new Error(data.error)
             }
 
             setMessages([...messages, data])
+
         } catch (error) {
             console.error(error.message)
             toast.error(error.message)

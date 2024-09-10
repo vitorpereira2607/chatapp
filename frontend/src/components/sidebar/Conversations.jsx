@@ -3,6 +3,7 @@ import useGetConversations from '../../hooks/useGetConversations'
 
 function Conversations() {
     const { loading, conversations } = useGetConversations();
+
     return (
         <div className="flex flex-col overflow-auto">
             {conversations.map((conversation, index) => (
