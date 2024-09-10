@@ -1,5 +1,6 @@
 import Message from "../../models/MessageModel.js";
 import Conversation from "../../models/ConversationModel.js";
+import SocketService from "../socket/socketService.js";
 
 class MessageService{
     async sendMessage(senderId, receiverId, messageContent){
@@ -20,13 +21,14 @@ class MessageService{
                 message: messageContent
             })
 
-            if(newMessage){
-                conversation.messages.push(newMessage);
-            }
-
+            conversation.messages.push(newMessage);
+            
             await Promise.all([newMessage.save(), conversation.save()]);
+        
+            SocketService.receiverSocketId(receiverId, newMessage);
 
             return newMessage;
+
         } catch (error) {
             console.error(`Error in sendMessage service: ${error.message}`);
             throw new Error("Error sending message");

@@ -6,7 +6,6 @@ class UserService {
     async getAllUsersExcept(loggedInUserId){
         try{
             const users = await User.find({ _id: { $ne: loggedInUserId}}).select("-password")
-            console.log(users)
             if(!users){
                 throw new Error('Users not found')
             }

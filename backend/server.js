@@ -1,7 +1,9 @@
 import {config} from "./config/config.js";
 import db from "./db/db.js";
 
+
 import express from "express";
+import { app, server } from "./socket/socket.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -10,7 +12,7 @@ import messageRoutes from "./routes/messageRoutes.js";
 import userRouter from "./routes/userRoutes.js"
 
 
-const app = express();
+
 const PORT = config.server.port || 5000;
 
 app.use(cors({
@@ -31,7 +33,7 @@ const startServer = async () => {
     try {
         await db._connect();
 
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`Server running: http://localhost:${PORT}`);
         })
     } catch (error) {
