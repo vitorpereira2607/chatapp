@@ -34,15 +34,20 @@ class MessageService{
     }
 
     async getMessages(senderId, userToChatId){
-        const conversation = await Conversation.findOne({
-            participants: { $all: [senderId, userToChatId]}
-        }).populate("messages");
+        try {
+            const conversation = await Conversation.findOne({
+                participants: { $all: [senderId, userToChatId]}
+            }).populate("messages");
+    
+            if (!conversation) {
+                throw new Error("Conversation not found.");
+            }
 
-        if (!conversation) {
-            return res.status(404).json({ error: "Conversation not found." });
+            return conversation;
+            
+        } catch (error) {
+            console.error(`Error in getMessages service: ${error.message}`)
         }
-
-        return conversation;
     }
 
 }

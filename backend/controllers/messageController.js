@@ -26,10 +26,16 @@ class MessageController {
                 return res.status(400).json({ error: "User ID to chat with is required." });
             }
 
-           const conversation = await MessageService.getMessages(senderId, userToChatId)
-    
-            res.status(200).json(conversation.messages)
-            
+            const conversation = await MessageService.getMessages(senderId, userToChatId)
+
+            if(!conversation) {
+                return res.status(200).json([])
+            }
+
+            const messages = conversation.messages
+
+            res.status(200).json(messages)
+
         } catch (error) {
             console.error("Error in getMessages: ", error.message);
             res.status(500).json({ error: "Internal server error" })

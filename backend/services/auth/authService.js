@@ -36,6 +36,7 @@ class AuthService{
         const { accessToken, refreshToken } = generateTokenAndSetCookie(user._id, res);
         
         return {
+            _id: user._id,
             username: user.username,
             accessToken,
             refreshToken
