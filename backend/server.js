@@ -11,12 +11,12 @@ import authRoutes from "./routes/authRoutes.js"
 import messageRoutes from "./routes/messageRoutes.js";
 import userRouter from "./routes/userRoutes.js"
 
+const allowedOrigin = config.cors.cors_origin;
 
-
-const PORT = config.server.port || 5000;
+const PORT = config.server.port;
 
 app.use(cors({
-    origin: 'http://localhost:3000', // Allow requests from your Vite development server
+    origin: allowedOrigin, 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
   }));
