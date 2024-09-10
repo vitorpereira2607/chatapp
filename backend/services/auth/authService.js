@@ -37,6 +37,7 @@ class AuthService{
         
         return {
             _id: user._id,
+            fullName: user.fullName,
             username: user.username,
             accessToken,
             refreshToken
