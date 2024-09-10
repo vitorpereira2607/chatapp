@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const api_url = process.env.API_URL
+const apiUrl = import.meta.env.API_URL;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,10 +10,10 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: api_url,
+        target: apiUrl,
         changeOrigin: true,
+        secure: false, 
       }
     }
   },
- 
 })
