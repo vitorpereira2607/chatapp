@@ -20,6 +20,7 @@ const useLogin = () => {
         setErrors({})
         setLoading(true);
 
+        console.log()
         try {
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
