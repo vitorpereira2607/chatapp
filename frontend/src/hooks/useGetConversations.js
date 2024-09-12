@@ -10,7 +10,7 @@ const useGetConversations = () => {
         const getConversations = async () => {
             setLoading(true)
             try {
-                const response = await fetch('/api/users');
+                const response = await fetch(`${api_url}/api/users`);
                 const data = await response.json();
 
                 if (data.error) {
