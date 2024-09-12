@@ -16,10 +16,10 @@ const allowedOrigin = config.cors.cors_origin;
 const PORT = config.server.port;
 
 app.use(cors({
-    origin: allowedOrigin, 
+    origin: [allowedOrigin, "http://localhost:3000"], 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
-  }));
+}));
   
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
