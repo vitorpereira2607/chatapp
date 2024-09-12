@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       api_url: JSON.stringify(env.VITE_API_URL),
+      socket_io_url: JSON.stringify(env.VITE_SOCKET_IO_URL)
     },
     plugins: [react()],
     server: {
