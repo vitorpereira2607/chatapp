@@ -7,6 +7,8 @@ class ProtectRoute {
         try {
             const token = req.cookies.jwt;
 
+            console.log(token)
+
             if(!token){
                 return res.status(401).json({error: "You need to be logged in to access this route"})
             }
